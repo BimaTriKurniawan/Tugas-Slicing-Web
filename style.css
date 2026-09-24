@@ -1,0 +1,680 @@
+/* =====================================================
+    RESET & BASE
+   ===================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+  /* supaya judul section tidak tertutup navbar saat klik menu */
+    scroll-padding-top: var(--navbar-height);
+}
+
+/* =====================================================
+    CSS VARIABLES — mengatur warna, ukuran, dan font
+   ===================================================== */
+:root {
+  /* Warna utama */
+    --color-white: #ffffff;
+    --color-bg-alt: #f4f6fa;
+    --color-border: #e3e8f0;
+
+    --color-primary: #2f5fe0;
+    --color-primary-dark: #1f45b0;
+    --color-primary-soft: #eaf0fd;
+
+    --color-text: #1c2436;
+    --color-text-muted: #5b667a;
+    --color-text-faint: #8892a3;
+
+  /* Tipografi */
+    --font-display: Georgia, "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "Courier New", Courier, monospace;
+
+  /* Ukuran */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-full: 999px;
+
+    --shadow-sm: 0 2px 8px rgba(28, 36, 54, 0.06);
+    --shadow-md: 0 10px 30px rgba(28, 36, 54, 0.08);
+    --shadow-lg: 0 22px 48px rgba(28, 36, 54, 0.14);
+
+    --transition-base: 0.3s ease;
+
+    --container-width: 1140px;
+    --section-padding: 6.5rem 0;
+
+    --navbar-height: 76px;
+    --navbar-bg: rgba(255, 255, 255, 0.9);
+    color-scheme: light;
+}
+
+/* =====================================================
+    TYPOGRAPHY
+   ===================================================== */
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-white);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-text);
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.section-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+}
+
+.section-title {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+    color: var(--color-text-muted);
+    max-width: 620px;
+    font-size: 1.02rem;
+}
+
+.section-head {
+    margin-bottom: 3rem;
+}
+
+.section-head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-head.center .section-subtitle,
+.section-head.center .section-subtittle {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =====================================================
+    BUTTONS
+   ===================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform var(--transition-base), box-shadow var(--transition-base),
+    background-color var(--transition-base), color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.btn img {
+    width: 18px;
+    height: 18px;
+}
+
+/* sembunyikan ikon yang src-nya masih kosong (biar tidak muncul gambar rusak) */
+.btn img[src=""] {
+    display: none;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+    background-color: var(--color-white);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+.btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* =====================================================
+    NAVBAR
+   ===================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-height);
+    background-color: var(--navbar-bg);
+    backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 1000;
+}
+
+.navbar .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: 0.01em;
+}
+
+.navbar-brand span {
+    color: var(--color-primary);
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+}
+
+.navbar-menu a {
+    position: relative;
+    font-size: 0.94rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    padding: 0.4rem 0.05rem;
+    transition: color var(--transition-base);
+}
+
+.navbar-menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width var(--transition-base);
+}
+
+.navbar-menu a:hover,
+.navbar-menu a:focus-visible {
+    color: var(--color-text);
+}
+
+.navbar-menu a:hover::after,
+.navbar-menu a:focus-visible::after {
+    width: 100%;
+}
+
+/* =====================================================
+    HOME SECTION
+   ===================================================== */
+.home {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 3.5rem;
+    padding-top: calc(var(--navbar-height) + 5rem);
+    padding-bottom: 5rem;
+  /* meniru lebar .container (max 1140px, ditengah) */
+    padding-left: max(1.5rem, calc((100% - var(--container-width)) / 2 + 1.5rem));
+    padding-right: max(1.5rem, calc((100% - var(--container-width)) / 2 + 1.5rem));
+    background: linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-white) 100%);
+}
+
+.home .container {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.home-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+.home-name {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    margin-bottom: 0.5rem;
+}
+
+.home-role {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+}
+
+.home-desc {
+    color: var(--color-text-muted);
+    max-width: 520px;
+    margin-bottom: 2.2rem;
+    font-size: 1.02rem;
+}
+
+.home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.home-photo-wrap {
+    position: relative;
+    justify-self: center;
+}
+
+.home-photo-ring {
+    position: absolute;
+    inset: -18px;
+    border: 1.5px dashed var(--color-primary);
+    border-radius: 50%;
+    opacity: 0.35;
+}
+
+.home-photo {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid var(--color-white);
+    box-shadow: var(--shadow-lg);
+    background-color: var(--color-bg-alt);
+}
+
+.home-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* =====================================================
+    ABOUT SECTION
+   ===================================================== */
+.about {
+    padding: var(--section-padding);
+}
+
+.about-intro {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.about-intro p:not(.section-eyebrow) {
+    color: var(--color-text-muted);
+    margin-bottom: 1.1rem;
+}
+
+.about-intro p span {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* =====================================================
+    EDUCATION — TIMELINE
+   ===================================================== */
+.education {
+    padding: var(--section-padding);
+    background-color: var(--color-bg-alt);
+}
+
+.timeline {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-left: 2.4rem;
+    border-left: 2px solid var(--color-border);
+}
+
+.timeline-time {
+    position: relative;
+    padding-bottom: 2.6rem;
+}
+
+.timeline-time:last-child {
+    padding-bottom: 0;
+}
+
+/* titik di garis timeline */
+.timeline-time::before {
+    content: "";
+    position: absolute;
+    left: calc(-2.4rem - 8px);
+    top: 0.35rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    border: 3px solid var(--color-primary);
+}
+
+.timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.timeline-time h3 {
+    font-size: 1.08rem;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-time p {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+}
+
+/* =====================================================
+    CONTACT SECTION
+   ===================================================== */
+.contact {
+    padding: var(--section-padding);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    text-align: center;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.8rem 1.2rem;
+    transition: transform var(--transition-base), box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+}
+
+.contact-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-soft);
+    border-radius: 50%;
+}
+
+.contact-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.contact-card span.contact-label {
+    font-size: 0.78rem;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.contact-card span.contact-value {
+    font-size: 0.92rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+/* =====================================================
+    RESPONSIVE — TABLET
+   ===================================================== */
+@media (max-width: 992px) {
+    :root {
+    --section-padding: 5rem 0;
+    }
+
+    .home {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.5rem;
+    }
+
+    .home-desc {
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .hero-actions,
+    .home-actions {
+    justify-content: center;
+    }
+
+    .home-photo-wrap {
+    order: -1;
+    }
+
+    .home-photo {
+    width: 240px;
+    height: 240px;
+    }
+
+    .navbar-menu {
+    gap: 1.3rem;
+    }
+}
+
+/* =====================================================
+    RESPONSIVE — MOBILE
+   ===================================================== */
+@media (max-width: 640px) {
+    :root {
+    --section-padding: 3.75rem 0;
+    }
+
+    html {
+    scroll-padding-top: 7rem;
+    }
+
+    .navbar .container {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+    gap: 0.6rem;
+    }
+
+    .navbar {
+    height: auto;
+    position: sticky;
+    }
+
+    .home {
+    padding-top: 2.5rem;
+    }
+
+    .navbar-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem 1.2rem;
+    }
+
+    .contact-grid {
+    grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+    ACCESSIBILITY
+   ===================================================== */
+a:focus-visible,
+.btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+    scroll-behavior: auto;
+    }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    }
+}
+
+/* Ikon contact berupa <img> */
+.contact-icon img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Tombol toggle tema */
+.theme-toggle {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-alt);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: transform var(--transition-base), color var(--transition-base),
+    border-color var(--transition-base), background-color var(--transition-base);
+}
+
+.theme-toggle:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+.theme-toggle .icon-moon,
+.theme-toggle .icon-sun {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.theme-toggle .icon-sun {
+    display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+    display: block;
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+    display: none;
+}
+
+/* Transisi halus saat tema diganti (class dipasang oleh JS) */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Mode gelap: cukup menimpa variabel warna */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-white: #0f1420;
+    --color-bg-alt: #161d2e;
+    --color-border: #263048;
+
+    --color-primary: #6b93ff;
+    --color-primary-dark: #8fadff;
+    --color-primary-soft: #1c2a4d;
+
+    --color-text: #e8ecf5;
+    --color-text-muted: #a3adc2;
+    --color-text-faint: #7a859b;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 22px 48px rgba(0, 0, 0, 0.55);
+
+    --navbar-bg: rgba(15, 20, 32, 0.85);
+}
+
+/* Ikon hitam jadi putih di mode gelap (hapus kalau ikonmu sudah berwarna) */
+:root[data-theme="dark"] .btn img,
+:root[data-theme="dark"] .contact-icon img {
+    filter: brightness(0) invert(1);
+}
